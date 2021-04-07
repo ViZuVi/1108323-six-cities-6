@@ -18,7 +18,7 @@ export const offers = [
       name: `Angelina`
     },
     id: 1,
-    images: [`img/1.png`, `img/2.png`],
+    images: [`img/apartment-01.jpg`, `img/apartment-02.jpg`, `img/apartment-01.jpg`, `img/studio-01.jpg`],
     isFavorite: false,
     isPremium: true,
     location: {
@@ -42,7 +42,7 @@ export const offers = [
         longitude: 4.895168,
         zoom: 10
       },
-      name: `Amsterdam`
+      name: `Paris`
     },
     description: `A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam.`,
     goods: [`Heating`, `Kitchen`, `Cable TV`, `Washing machine`, `Coffee machine`, `Dishwasher`],
@@ -53,7 +53,7 @@ export const offers = [
       name: `Angelina`
     },
     id: 2,
-    images: [`img/1.png`, `img/2.png`],
+    images: [`img/apartment-01.jpg`, `img/apartment-02.jpg`, `img/apartment-01.jpg`, `img/studio-01.jpg`],
     isFavorite: false,
     isPremium: false,
     location: {
@@ -88,7 +88,7 @@ export const offers = [
       name: `Angelina`
     },
     id: 3,
-    images: [`img/1.png`, `img/2.png`],
+    images: [`img/apartment-01.jpg`, `img/apartment-02.jpg`, `img/apartment-01.jpg`, `img/studio-01.jpg`],
     isFavorite: false,
     isPremium: false,
     location: {
@@ -123,7 +123,7 @@ export const offers = [
       name: `Angelina`
     },
     id: 4,
-    images: [`img/1.png`, `img/2.png`],
+    images: [`img/apartment-01.jpg`, `img/apartment-02.jpg`, `img/apartment-01.jpg`, `img/studio-01.jpg`],
     isFavorite: false,
     isPremium: false,
     location: {

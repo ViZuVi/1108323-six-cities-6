@@ -5,6 +5,11 @@ import {countStars} from '../../common';
 const FavoriteOffer = ({offer}) => {
   return (
     <article className="favorites__card place-card">
+      {offer.isPremium &&
+        <div className="place-card__mark">
+          <span>Premium</span>
+        </div>
+      }
       <div className="favorites__image-wrapper place-card__image-wrapper">
         <a href="#">
           <img className="place-card__image" src={offer.previewImage} width="150" height="110" alt="Place image" />
@@ -30,7 +35,7 @@ const FavoriteOffer = ({offer}) => {
           </div>
         </div>
         <h2 className="place-card__name">
-          <a href="#">{offer.description}</a>
+          <a href="#">{offer.title}</a>
         </h2>
         <p className="place-card__type">{offer.type}</p>
       </div>
@@ -44,7 +49,7 @@ FavoriteOffer.propTypes = {
     previewImage: PropTypes.string.isRequired,
     price: PropTypes.number.isRequired,
     rating: PropTypes.number.isRequired,
-    description: PropTypes.string.isRequired,
+    title: PropTypes.string.isRequired,
     type: PropTypes.string.isRequired,
   }).isRequired,
 };

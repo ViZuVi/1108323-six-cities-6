@@ -1,11 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import {Link} from 'react-router-dom';
 import {countStars} from '../../common';
 
-const OfferItem = ({offer}) => {
+const OfferItem = ({offer, onCardMouseover}) => {
 
   return (
-    <article className="cities__place-card place-card">
+    <article className="cities__place-card place-card" onMouseOver={() => onCardMouseover(offer)} onMouseOut={() => onCardMouseover(null)}>
       {offer.isPremium &&
         <div className="place-card__mark">
           <span>Premium</span>
@@ -36,7 +37,7 @@ const OfferItem = ({offer}) => {
           </div>
         </div>
         <h2 className="place-card__name">
-          <a href="#">{offer.description}</a>
+          <Link to={`offer/${offer.id}`}>{offer.title}</Link>
         </h2>
         <p className="place-card__type">{offer.type}</p>
       </div>
@@ -46,13 +47,15 @@ const OfferItem = ({offer}) => {
 
 OfferItem.propTypes = {
   offer: PropTypes.shape({
+    id: PropTypes.number.isRequired,
     isPremium: PropTypes.bool.isRequired,
     previewImage: PropTypes.string.isRequired,
     price: PropTypes.number.isRequired,
     rating: PropTypes.number.isRequired,
-    description: PropTypes.string.isRequired,
+    title: PropTypes.string.isRequired,
     type: PropTypes.string.isRequired,
   }).isRequired,
+  onCardMouseover: PropTypes.func.isRequired,
 };
 
 export default OfferItem;
