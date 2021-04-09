@@ -1,10 +1,15 @@
 import {ActionType} from './action';
+import {getCitiesSet} from './common';
 import {offers} from './mocks/offers';
+
+const citiesSet = getCitiesSet(offers);
+const activeCity = citiesSet[0];
 
 const initialState = {
   offers,
-  activeCity: ``,
-  filteredOffers: offers,
+  cities: citiesSet,
+  activeCity,
+  filteredOffers: offers.filter((offer) => (offer.city.name === activeCity)),
 };
 
 const reducer = (state = initialState, action) => {
@@ -13,6 +18,7 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         activeCity: action.payload,
+        filteredOffers: state.offers.filter((offer) => (offer.city.name === action.payload)),
       };
     case ActionType.GET_OFFERS:
       return {
