@@ -11,7 +11,7 @@ import {AppRoute} from '../../const';
 const App = () => {
   return (
     <Switch>
-      <Route exact path={AppRoute.MAIN}><Main offers={offers} /></Route>
+      <Route exact path={AppRoute.MAIN}><Main /></Route>
       <Route exact path={AppRoute.FAVORITES}><FavoritesContainer favorites={offers}/></Route>
       <Route exact path={AppRoute.LOGIN}><SignIn /></Route>
       <Route exact path={AppRoute.PROPERTY} render={(props) => {

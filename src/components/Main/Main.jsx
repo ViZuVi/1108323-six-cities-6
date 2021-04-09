@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import {connect} from 'react-redux';
 import OffersList from '../OffersList/OffersList';
 import Map from '../Map/Map';
 
@@ -104,4 +105,8 @@ Main.propTypes = {
   offers: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 
-export default Main;
+const mapStateToProps = (state) => ({
+  offers: state.filteredOffers,
+});
+
+export default connect(mapStateToProps, null)(Main);
