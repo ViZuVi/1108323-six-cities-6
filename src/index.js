@@ -11,7 +11,7 @@ import {reducer} from './reducer';
 import {createAPI} from './api';
 import {AuthorizationStatus} from './const';
 import {ActionCreator} from './action';
-import {fetchOffers} from './api-actions';
+import {fetchOffers, checkAuth} from './api-actions';
 
 const api = createAPI(
     () => store.dispatch(ActionCreator.requireAuthorization(AuthorizationStatus.NO_AUTH))
@@ -19,7 +19,7 @@ const api = createAPI(
 
 const store = createStore(reducer, composeWithDevTools(applyMiddleware(thunk.withExtraArgument(api))));
 
-
+store.dispatch(checkAuth());
 store.dispatch(fetchOffers());
 
 ReactDOM.render(
