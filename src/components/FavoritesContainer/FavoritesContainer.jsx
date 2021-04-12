@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import {connect} from 'react-redux';
 import Favorites from '../Favorites/Favorites';
 import FavoritesEmty from '../FavoritesEmpty/FavoritesEmty';
 
@@ -15,4 +16,8 @@ FavoritesContainer.propTypes = {
   favorites: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 
-export default FavoritesContainer;
+const mapStateToProps = (state) => ({
+  favorites: state.favorites
+});
+
+export default connect(mapStateToProps, null)(FavoritesContainer);

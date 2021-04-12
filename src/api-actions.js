@@ -11,7 +11,14 @@ export const fetchOffers = () => (dispatch, _getState, api) => {
 
 export const checkAuth = () => (dispatch, _getState, api) => (
   api.get(`/login`)
-    // .then(({data}) => dispatch(getUserInfo(data)))
+    .then(({data}) => dispatch(ActionCreator.getUserInfo(data)))
     .then(() => dispatch(ActionCreator.requireAuthorization(AuthorizationStatus.AUTH)))
     .catch(() => {})
+);
+
+export const login = ({email, password}) => (dispatch, _getState, api) => (
+  api.post(`/login`, {email, password})
+    .then(({data}) => dispatch(ActionCreator.getUserInfo(data)))
+    .then(() => dispatch(ActionCreator.requireAuthorization(AuthorizationStatus.AUTH)))
+    // .then(() => dispatch(ActionCreator.fetchFavorites()))
 );

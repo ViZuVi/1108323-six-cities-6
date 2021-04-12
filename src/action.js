@@ -4,7 +4,8 @@ export const ActionType = {
   CHANGE_SORTING: `/changeSorting`,
   REQUIRE_AUTHORIZATION: `/requireAuthorization`,
   LOAD_OFFERS: `/loadOffers`,
-  SET_LOADING_STATUS: `/setLoadingStatus`
+  SET_LOADING_STATUS: `/setLoadingStatus`,
+  GET_USER_INFO: `/getUserInfo`,
 };
 
 export const ActionCreator = {
@@ -31,5 +32,9 @@ export const ActionCreator = {
   setLoadingStatus: (status) => ({
     type: ActionType.SET_LOADING_STATUS,
     payload: status,
+  }),
+  getUserInfo: (userInfo) => ({
+    type: ActionType.GET_USER_INFO,
+    payload: userInfo,
   })
 };
