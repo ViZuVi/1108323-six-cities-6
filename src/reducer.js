@@ -1,10 +1,7 @@
 import {ActionType} from './action';
-import {getCitiesSet} from './common';
-import {SortingValues} from './const';
-import {offers} from './mocks/offers';
+import {AuthorizationStatus, LoadingStatus, SortingValues} from './const';
+import {adaptOffers} from './adapters/offers';
 
-const citiesSet = getCitiesSet(offers);
-const activeCity = citiesSet[0];
 const sortOffers = (offersToSort, selectedSortType) => {
   const initOffers = offersToSort.slice();
   switch (selectedSortType) {
@@ -21,18 +18,38 @@ const sortOffers = (offersToSort, selectedSortType) => {
 };
 
 const initialState = {
-  offers,
-  cities: citiesSet,
-  activeCity,
-  filteredOffers: offers.filter((offer) => (offer.city.name === activeCity)),
+  offers: [],
+  offersStatus: LoadingStatus.PENDING,
+  cities: [`Paris`, `Cologne`, `Brussels`, `Amsterdam`, `Hamburg`, `Dusseldorf`],
+  activeCity: `Paris`,
+  filteredOffers: [],
   activeSortType: SortingValues.POPULAR,
-  sortedOffers: offers.filter((offer) => (offer.city.name === activeCity)),
+  sortedOffers: [],
+  authorizationStatus: AuthorizationStatus.NO_AUTH,
 };
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
+    case ActionType.LOAD_OFFERS:
+      const offers = adaptOffers(action.payload);
+      return {
+        ...state,
+        offers,
+        filteredOffers: offers.slice().filter((offer) => (offer.city.name === state.activeCity)),
+        sortedOffers: offers.slice().filter((offer) => (offer.city.name === state.activeCity)),
+      };
+    case ActionType.SET_LOADING_STATUS:
+      return {
+        ...state,
+        offersStatus: action.payload
+      };
+    case ActionType.REQUIRE_AUTHORIZATION:
+      return {
+        ...state,
+        authorizationStatus: action.payload,
+      };
     case ActionType.CHANGE_CITY:
-      const filteredByCityOffers = initialState.offers.filter((offer) => (offer.city.name === action.payload));
+      const filteredByCityOffers = state.offers.slice().filter((offer) => (offer.city.name === action.payload));
       return {
         ...state,
         activeCity: action.payload,

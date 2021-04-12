@@ -22,3 +22,15 @@ export const CITIES = {
   Hamburg: [53.5503, 10.0006],
   Dusseldorf: [51.2287, 6.7743]
 };
+
+export const AuthorizationStatus = {
+  AUTH: `AUTH`,
+  NO_AUTH: `NO_AUTH`,
+};
+
+export const LoadingStatus = {
+  PENDING: `PENDING`,
+  LOADING: `LOADING`,
+  LOADED: `LOADED`,
+  ERROR: `ERROR`,
+};
