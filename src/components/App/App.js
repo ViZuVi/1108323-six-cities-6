@@ -1,9 +1,9 @@
 import React from 'react';
 import {Switch, Route} from 'react-router-dom';
 import Main from '../Main/Main';
-import FavoritesContainer from '../FavoritesContainer/FavoritesContainer';
+// import FavoritesContainer from '../FavoritesContainer/FavoritesContainer';
 import SignIn from '../SignIn/SignIn';
-import Property from '../Property/Property';
+// import Property from '../Property/Property';
 import NotFound from '../NotFound/NotFound';
 import {AppRoute} from '../../const';
 

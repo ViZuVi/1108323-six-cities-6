@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import OffersList from '../OffersList/OffersList';
@@ -8,6 +8,7 @@ import Header from '../Header/Header';
 import SortTypes from '../SortTypes/SortTypes';
 
 const Main = ({offers, activeCity}) => {
+  const [hoveredOffer, setHoveredOffer] = useState(null);
   return (
     <div className="page page--gray page--main">
       <Header />
@@ -24,11 +25,11 @@ const Main = ({offers, activeCity}) => {
               <h2 className="visually-hidden">Places</h2>
               <b className="places__found">{offers.length} places to stay in {activeCity}</b>
               <SortTypes />
-              <OffersList offers={offers} />
+              <OffersList offers={offers} onCardMouseover={setHoveredOffer}/>
             </section>
             <div className="cities__right-section">
               <section className="cities__map map">
-                <Map offers={offers} />
+                <Map offers={offers} hoveredOffer={hoveredOffer} />
               </section>
             </div>
           </div>

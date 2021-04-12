@@ -8,7 +8,7 @@ import App from './components/App/App';
 import browserHistory from './browser-history';
 import {reducer} from './reducer';
 
-const store = createStore(reducer, composeWithDevTools);
+const store = createStore(reducer, composeWithDevTools());
 
 ReactDOM.render(
     <Provider store={store}>
