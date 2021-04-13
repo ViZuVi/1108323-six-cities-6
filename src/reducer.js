@@ -39,6 +39,11 @@ const initialState = {
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
+    case ActionType.GET_BOOKMARKS:
+      return {
+        ...state,
+        favorites: adaptOffers(action.payload),
+      };
     case ActionType.SET_COMMENT_STATUS:
       return {
         ...state,

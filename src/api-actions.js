@@ -6,6 +6,7 @@ export const fetchOffers = () => (dispatch, _getState, api) => {
   api.get(`/hotels`)
     .then(({data}) => dispatch(ActionCreator.loadOffers(data)))
     .then(() => dispatch(ActionCreator.setOffersLoadingStatus(LoadingStatus.LOADED)))
+    .then(() => dispatch(fetchBookmarks()))
     .catch(() => dispatch(ActionCreator.setOffersLoadingStatus(LoadingStatus.ERROR)));
 };
 
@@ -46,5 +47,22 @@ export const login = ({email, password}) => (dispatch, _getState, api) => (
   api.post(`/login`, {email, password})
     .then(({data}) => dispatch(ActionCreator.getUserInfo(data)))
     .then(() => dispatch(ActionCreator.requireAuthorization(AuthorizationStatus.AUTH)))
-    // .then(() => dispatch(ActionCreator.fetchFavorites()))
 );
+
+export const logout = () => (dispatch, _getState, api) => (
+  api.get(`/logout`)
+    .then(() => dispatch(ActionCreator.requireAuthorization(AuthorizationStatus.NO_AUTH)))
+    .then(() => dispatch(ActionCreator.getUserInfo({})))
+);
+
+export const addToFavorite = (id, status) => (dispatch, _getState, api) => (
+  api.post(`/favorite/${id}/${status}`, {id, status})
+    .then(() => dispatch(fetchBookmarks()))
+    .then(() => dispatch(fetchOffers()))
+);
+
+export const fetchBookmarks = () => (dispatch, _getState, api) => (
+  api.get(`/favorite`)
+    .then(({data}) => dispatch(ActionCreator.getBookmarks(data)))
+);
+

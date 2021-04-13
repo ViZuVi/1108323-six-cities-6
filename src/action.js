@@ -11,6 +11,7 @@ export const ActionType = {
   GET_REVIEWS: `/getReviews`,
   GET_NEARBY_OFFERS: `/getNearbyOffers`,
   SET_COMMENT_STATUS: `/setCommentStatus`,
+  GET_BOOKMARKS: `/getBookmarks`,
 };
 
 export const ActionCreator = {
@@ -61,5 +62,9 @@ export const ActionCreator = {
   setCommentStatus: (status) => ({
     type: ActionType.SET_COMMENT_STATUS,
     payload: status,
+  }),
+  getBookmarks: (offers) => ({
+    type: ActionType.GET_BOOKMARKS,
+    payload: offers,
   })
 };

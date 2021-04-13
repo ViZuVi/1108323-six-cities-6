@@ -1,11 +1,16 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import PropTypes from 'prop-types';
+import {connect} from 'react-redux';
 import FavoriteOffer from '../FavoriteOffer/FavoriteOffer';
 import {getCitiesSet} from '../../common';
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
+import {fetchBookmarks} from '../../api-actions';
 
-const Favorites = ({favorites}) => {
+const Favorites = ({favorites, onComponentMount}) => {
+  useEffect(() => {
+    onComponentMount();
+  }, []);
   const favoriteCities = getCitiesSet(favorites);
   return (
     <div className="page">
@@ -45,6 +50,13 @@ const Favorites = ({favorites}) => {
 
 Favorites.propTypes = {
   favorites: PropTypes.arrayOf(PropTypes.object).isRequired,
+  onComponentMount: PropTypes.func.isRequired,
 };
 
-export default Favorites;
+const mapDispatchToProps = (dispatch) => ({
+  onComponentMount() {
+    dispatch(fetchBookmarks());
+  }
+});
+
+export default connect(null, mapDispatchToProps)(Favorites);
