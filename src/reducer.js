@@ -34,10 +34,16 @@ const initialState = {
   offerStatus: LoadingStatus.PENDING,
   offer: null,
   reviews: [],
+  commentStatus: LoadingStatus.PENDING,
 };
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
+    case ActionType.SET_COMMENT_STATUS:
+      return {
+        ...state,
+        commentStatus: action.payload,
+      };
     case ActionType.GET_NEARBY_OFFERS:
       return {
         ...state,

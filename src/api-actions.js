@@ -27,6 +27,14 @@ export const fetchNearbyOffers = (id) => (dispatch, _getState, api) => {
     .then(({data}) => dispatch(ActionCreator.getNearbyOffers(data)));
 };
 
+export const postComment = ({id, rating, comment}) => (dispatch, _getState, api) => {
+  dispatch(ActionCreator.setCommentStatus(LoadingStatus.LOADING));
+  return api.post(`/comments/${id}`, {rating, comment})
+    .then(({data}) => dispatch(ActionCreator.getReviews(data)))
+    .then(() => dispatch(ActionCreator.setCommentStatus(LoadingStatus.LOADED)))
+    .catch(() => dispatch(ActionCreator.setCommentStatus(LoadingStatus.ERROR)));
+};
+
 export const checkAuth = () => (dispatch, _getState, api) => (
   api.get(`/login`)
     .then(({data}) => dispatch(ActionCreator.getUserInfo(data)))

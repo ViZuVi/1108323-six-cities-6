@@ -1,22 +1,23 @@
 import React, {useEffect} from 'react';
 import PropTypes from 'prop-types';
-import {Link, useHistory, useParams} from 'react-router-dom';
+import {useHistory, useParams} from 'react-router-dom';
 import {connect} from 'react-redux';
 import {countStars} from '../../common';
 import Header from '../Header/Header';
 import Reviews from '../Reviews/Reviews';
 import Map from '../Map/Map';
 import OffersList from '../OffersList/OffersList';
-import {LoadingStatus} from '../../const';
+import {AppRoute, AuthorizationStatus, LoadingStatus} from '../../const';
 import NotFound from '../NotFound/NotFound';
 import {fetchNearbyOffers, fetchOffer, fetchReviews} from '../../api-actions';
 import Spinner from '../Spinner/Spinner';
+import {ActionCreator} from '../../action';
 
-const Property = ({offer, nearbyOffers, offerStatus, onComponentMount}) => {
+const Property = ({offer, nearbyOffers, offerStatus, onComponentMount, onBookmarkClick, authorizationStatus}) => {
   const MAX_NEARBY_OFFERS = 3;
   const nearbyOffersSliced = nearbyOffers.slice(0, MAX_NEARBY_OFFERS);
   const {id} = useParams();
-  // const history = useHistory();
+  const history = useHistory();
   if (offerStatus === LoadingStatus.ERROR) {
     return <NotFound />;
   }
@@ -52,7 +53,13 @@ const Property = ({offer, nearbyOffers, offerStatus, onComponentMount}) => {
                   <h1 className="property__name">
                     {offer.title}
                   </h1>
-                  <button className="property__bookmark-button button" type="button">
+                  <button
+                    className="property__bookmark-button button"
+                    type="button"
+                    onClick={() => {
+                      return authorizationStatus === AuthorizationStatus.AUTH ? onBookmarkClick() : history.push(AppRoute.LOGIN);
+                    }}
+                  >
                     <svg className="property__bookmark-icon" width="31" height="33">
                       <use xlinkHref="#icon-bookmark"></use>
                     </svg>
@@ -166,13 +173,16 @@ Property.propTypes = {
       isPro: PropTypes.bool.isRequired,
       name: PropTypes.string.isRequired,
     })
-  }))
+  })),
+  authorizationStatus: PropTypes.string.isRequired,
+  onBookmarkClick: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   offer: state.offer,
   nearbyOffers: state.nearbyOffers,
   offerStatus: state.offerStatus,
+  authorizationStatus: state.authorizationStatus,
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -181,6 +191,9 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch(fetchReviews(id));
     dispatch(fetchNearbyOffers(id));
   },
+  onBookmarkClick(id, status) {
+    dispatch(ActionCreator.addToBookmarks(id, status));
+  }
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Property);
