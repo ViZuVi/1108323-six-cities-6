@@ -17,6 +17,16 @@ export const fetchOffer = (id) => (dispatch, _getState, api) => {
     .catch(() => dispatch(ActionCreator.setOfferLoadingStatus(LoadingStatus.ERROR)));
 };
 
+export const fetchReviews = (id) => (dispatch, _getState, api) => {
+  api.get(`/comments/${id}`)
+    .then(({data}) => dispatch(ActionCreator.getReviews(data)));
+};
+
+export const fetchNearbyOffers = (id) => (dispatch, _getState, api) => {
+  api.get(`/hotels/${id}/nearby`)
+    .then(({data}) => dispatch(ActionCreator.getNearbyOffers(data)));
+};
+
 export const checkAuth = () => (dispatch, _getState, api) => (
   api.get(`/login`)
     .then(({data}) => dispatch(ActionCreator.getUserInfo(data)))

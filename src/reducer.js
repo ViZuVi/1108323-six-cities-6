@@ -2,6 +2,7 @@ import {ActionType} from './action';
 import {AuthorizationStatus, LoadingStatus, SortingValues} from './const';
 import {adaptOffer, adaptOffers} from './adapters/offers';
 import {adaptAuthInfo} from './adapters/authInfo';
+import {adaptReviews} from './adapters/reviews';
 
 const sortOffers = (offersToSort, selectedSortType) => {
   const initOffers = offersToSort.slice();
@@ -31,11 +32,22 @@ const initialState = {
   userInfo: {},
   nearbyOffers: [],
   offerStatus: LoadingStatus.PENDING,
-  offer: null
+  offer: null,
+  reviews: [],
 };
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
+    case ActionType.GET_NEARBY_OFFERS:
+      return {
+        ...state,
+        nearbyOffers: adaptOffers(action.payload)
+      };
+    case ActionType.GET_REVIEWS:
+      return {
+        ...state,
+        reviews: adaptReviews(action.payload)
+      };
     case ActionType.GET_OFFER:
       return {
         ...state,

@@ -4,16 +4,17 @@ import {Link, useHistory, useParams} from 'react-router-dom';
 import {connect} from 'react-redux';
 import {countStars} from '../../common';
 import Header from '../Header/Header';
-// import Map from '../Map/Map';
-// import OffersList from '../OffersList/OffersList';
+import Reviews from '../Reviews/Reviews';
+import Map from '../Map/Map';
+import OffersList from '../OffersList/OffersList';
 import {LoadingStatus} from '../../const';
 import NotFound from '../NotFound/NotFound';
-import {fetchOffer} from '../../api-actions';
+import {fetchNearbyOffers, fetchOffer, fetchReviews} from '../../api-actions';
 import Spinner from '../Spinner/Spinner';
 
-const Property = ({offer, offers, offerStatus, onComponentMount}) => {
+const Property = ({offer, nearbyOffers, offerStatus, onComponentMount}) => {
   const MAX_NEARBY_OFFERS = 3;
-  const nearbyOffersSliced = offers.slice(0, MAX_NEARBY_OFFERS);
+  const nearbyOffersSliced = nearbyOffers.slice(0, MAX_NEARBY_OFFERS);
   const {id} = useParams();
   // const history = useHistory();
   if (offerStatus === LoadingStatus.ERROR) {
@@ -94,7 +95,7 @@ const Property = ({offer, offers, offerStatus, onComponentMount}) => {
                   <h2 className="property__host-title">Meet the host</h2>
                   <div className="property__host-user user">
                     <div className="property__avatar-wrapper property__avatar-wrapper--pro user__avatar-wrapper">
-                      <img className="property__avatar user__avatar" src="img/avatar-angelina.jpg" width="74" height="74" alt="Host avatar" />
+                      <img className="property__avatar user__avatar" src={offer.host.avatarUrl} width="74" height="74" alt="Host avatar" />
                     </div>
                     <span className="property__user-name">
                       {offer.host.name}
@@ -112,18 +113,18 @@ const Property = ({offer, offers, offerStatus, onComponentMount}) => {
                     </p>
                   </div>
                 </div>
-                {/* <Reviews reviews={reviews} /> */}
+                <Reviews />
               </div>
             </div>
             <section className="property__map map">
-              {/* <Map offers={nearbyOffersSliced} /> */}
+              {nearbyOffers.length > 0 ? <Map offers={nearbyOffersSliced} /> : ``}
             </section>
           </section>
           <div className="container">
             <section className="near-places places">
               <h2 className="near-places__title">Other places in the neighbourhood</h2>
               <div className="near-places__list places__list">
-                {/* <OffersList offers={nearbyOffersSliced} /> */}
+                <OffersList offers={nearbyOffersSliced} onCardMouseover={() => {}}/>
               </div>
             </section>
           </div>
@@ -147,23 +148,38 @@ Property.propTypes = {
     host: PropTypes.shape({
       name: PropTypes.string.isRequired,
       isPro: PropTypes.bool.isRequired,
+      avatarUrl: PropTypes.string.isRequired,
     }).isRequired,
     description: PropTypes.string.isRequired,
   }),
-  offers: PropTypes.arrayOf(PropTypes.object).isRequired,
+  nearbyOffers: PropTypes.arrayOf(PropTypes.object).isRequired,
   offerStatus: PropTypes.string.isRequired,
   onComponentMount: PropTypes.func.isRequired,
+  reviews: PropTypes.arrayOf(PropTypes.shape({
+    comment: PropTypes.string.isRequired,
+    date: PropTypes.string.isRequired,
+    id: PropTypes.number.isRequired,
+    rating: PropTypes.number.isRequired,
+    user: PropTypes.shape({
+      avatarUrl: PropTypes.string.isRequired,
+      id: PropTypes.number.isRequired,
+      isPro: PropTypes.bool.isRequired,
+      name: PropTypes.string.isRequired,
+    })
+  }))
 };
 
 const mapStateToProps = (state) => ({
   offer: state.offer,
-  offers: state.nearbyOffers,
+  nearbyOffers: state.nearbyOffers,
   offerStatus: state.offerStatus,
 });
 
 const mapDispatchToProps = (dispatch) => ({
   onComponentMount(id) {
     dispatch(fetchOffer(id));
+    dispatch(fetchReviews(id));
+    dispatch(fetchNearbyOffers(id));
   },
 });
 

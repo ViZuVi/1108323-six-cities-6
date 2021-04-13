@@ -8,6 +8,8 @@ export const ActionType = {
   SET_OFFER_LOADING_STATUS: `/setOfferLoadingStatus`,
   GET_USER_INFO: `/getUserInfo`,
   GET_OFFER: `/getOffer`,
+  GET_REVIEWS: `/getReviews`,
+  GET_NEARBY_OFFERS: `/getNearbyOffers`,
 };
 
 export const ActionCreator = {
@@ -46,5 +48,13 @@ export const ActionCreator = {
   getOffer: (offer) => ({
     type: ActionType.GET_OFFER,
     payload: offer,
+  }),
+  getReviews: (reviews) => ({
+    type: ActionType.GET_REVIEWS,
+    payload: reviews,
+  }),
+  getNearbyOffers: (offers) => ({
+    type: ActionType.GET_NEARBY_OFFERS,
+    payload: offers,
   })
 };
