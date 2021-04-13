@@ -1,11 +1,11 @@
 import React, {useEffect} from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
-import FavoriteOffer from '../FavoriteOffer/FavoriteOffer';
 import {getCitiesSet} from '../../common';
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
 import {fetchBookmarks} from '../../api-actions';
+import OfferItem from '../OfferItem/OfferItem';
 
 const Favorites = ({favorites, onComponentMount}) => {
   useEffect(() => {
@@ -33,7 +33,7 @@ const Favorites = ({favorites, onComponentMount}) => {
                       </div>
                     </div>
                     <div className="favorites__places">
-                      {offersByCity.map((offer) => <FavoriteOffer offer={offer} key={offer.id} />)}
+                      {offersByCity.map((offer) => <OfferItem offer={offer} key={offer.id} offerType={`FAVORITES`} onCardMouseover={() => {}} />)}
                     </div>
                   </li>
                 );

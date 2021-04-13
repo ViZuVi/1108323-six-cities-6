@@ -59,6 +59,8 @@ export const addToFavorite = (id, status) => (dispatch, _getState, api) => (
   api.post(`/favorite/${id}/${status}`, {id, status})
     .then(() => dispatch(fetchBookmarks()))
     .then(() => dispatch(fetchOffers()))
+    .then(() => dispatch(fetchOffer(id)))
+    .then(() => dispatch(fetchNearbyOffers(id)))
 );
 
 export const fetchBookmarks = () => (dispatch, _getState, api) => (

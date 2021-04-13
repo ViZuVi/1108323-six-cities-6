@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {countStars} from '../../common';
+import {countStars, formatDate} from '../../common';
 
 const Review = ({review}) => {
   return (
@@ -23,7 +23,7 @@ const Review = ({review}) => {
         <p className="reviews__text">
           {review.comment}
         </p>
-        <time className="reviews__time" dateTime="2019-04-24">{review.date}</time>
+        <time className="reviews__time" dateTime={review.date}>{formatDate(review.date)}</time>
       </div>
     </li>
   );

@@ -7,21 +7,52 @@ import {countStars} from '../../common';
 import {AppRoute, AuthorizationStatus} from '../../const';
 import {addToFavorite} from '../../api-actions';
 
-const OfferItem = ({offer, onCardMouseover, authorizationStatus, onBookmarkClick}) => {
+const OfferItem = ({offer, offerType, onCardMouseover, authorizationStatus, onBookmarkClick}) => {
+  const offerClass = {
+    MAIN: {
+      article: `cities__place-card`,
+      img: {
+        wrapper: `cities__image-wrapper`,
+        width: 260,
+        height: 200,
+      },
+      info: ``
+    },
+    FAVORITES: {
+      article: `favorites__card`,
+      img: {
+        wrapper: `favorites__image-wrapper`,
+        width: 150,
+        height: 110,
+      },
+      info: `favorites__card-info `
+    },
+    PROPERTY: {
+      article: `near-places__card`,
+      img: {
+        wrapper: `near-places__image-wrapper`,
+        width: 260,
+        height: 200,
+      },
+      info: ``
+    }
+  };
+  const selectedOfferType = offerClass[offerType];
   const history = useHistory();
+
   return (
-    <article className="cities__place-card place-card" onMouseOver={() => onCardMouseover(offer)} onMouseOut={() => onCardMouseover(null)}>
+    <article className={`${selectedOfferType.article} place-card`} onMouseOver={() => onCardMouseover(offer)} onMouseOut={() => onCardMouseover(null)}>
       {offer.isPremium &&
         <div className="place-card__mark">
           <span>Premium</span>
         </div>
       }
-      <div className="cities__image-wrapper place-card__image-wrapper">
+      <div className={`${selectedOfferType.img.wrapper} place-card__image-wrapper`}>
         <a href="#">
-          <img className="place-card__image" src={offer.previewImage} width="260" height="200" alt="Place image" />
+          <img className="place-card__image" src={offer.previewImage} width={selectedOfferType.img.width} height={selectedOfferType.img.height} alt="Place image" />
         </a>
       </div>
-      <div className="place-card__info">
+      <div className={`${selectedOfferType.info}place-card__info`}>
         <div className="place-card__price-wrapper">
           <div className="place-card__price">
             <b className="place-card__price-value">&euro;{offer.price}</b>
@@ -49,7 +80,7 @@ const OfferItem = ({offer, onCardMouseover, authorizationStatus, onBookmarkClick
           </div>
         </div>
         <h2 className="place-card__name">
-          <Link to={`offer/${offer.id}`}>{offer.title}</Link>
+          <Link to={`/offer/${offer.id}`}>{offer.title}</Link>
         </h2>
         <p className="place-card__type">{offer.type}</p>
       </div>
@@ -71,6 +102,7 @@ OfferItem.propTypes = {
   onCardMouseover: PropTypes.func.isRequired,
   authorizationStatus: PropTypes.string.isRequired,
   onBookmarkClick: PropTypes.func.isRequired,
+  offerType: PropTypes.string.isRequired,
 };
 
 const mapStateToProps = (state) => ({

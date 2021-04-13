@@ -9,9 +9,8 @@ import Map from '../Map/Map';
 import OffersList from '../OffersList/OffersList';
 import {AppRoute, AuthorizationStatus, LoadingStatus} from '../../const';
 import NotFound from '../NotFound/NotFound';
-import {fetchNearbyOffers, fetchOffer, fetchReviews} from '../../api-actions';
+import {addToFavorite, fetchNearbyOffers, fetchOffer, fetchReviews} from '../../api-actions';
 import Spinner from '../Spinner/Spinner';
-import {ActionCreator} from '../../action';
 
 const Property = ({offer, nearbyOffers, offerStatus, onComponentMount, onBookmarkClick, authorizationStatus}) => {
   const MAX_NEARBY_OFFERS = 3;
@@ -54,10 +53,12 @@ const Property = ({offer, nearbyOffers, offerStatus, onComponentMount, onBookmar
                     {offer.title}
                   </h1>
                   <button
-                    className="property__bookmark-button button"
+                    className={`property__bookmark-button button ${offer.isFavorite && `property__bookmark-button--active`}`}
                     type="button"
                     onClick={() => {
-                      return authorizationStatus === AuthorizationStatus.AUTH ? onBookmarkClick() : history.push(AppRoute.LOGIN);
+                      return authorizationStatus === AuthorizationStatus.AUTH
+                        ? onBookmarkClick(id, Number(!offer.isFavorite))
+                        : history.push(AppRoute.LOGIN);
                     }}
                   >
                     <svg className="property__bookmark-icon" width="31" height="33">
@@ -131,7 +132,7 @@ const Property = ({offer, nearbyOffers, offerStatus, onComponentMount, onBookmar
             <section className="near-places places">
               <h2 className="near-places__title">Other places in the neighbourhood</h2>
               <div className="near-places__list places__list">
-                <OffersList offers={nearbyOffersSliced} onCardMouseover={() => {}}/>
+                <OffersList offers={nearbyOffersSliced} onCardMouseover={() => {}} offerType={`PROPERTY`} />
               </div>
             </section>
           </div>
@@ -158,6 +159,7 @@ Property.propTypes = {
       avatarUrl: PropTypes.string.isRequired,
     }).isRequired,
     description: PropTypes.string.isRequired,
+    isFavorite: PropTypes.bool.isRequired,
   }),
   nearbyOffers: PropTypes.arrayOf(PropTypes.object).isRequired,
   offerStatus: PropTypes.string.isRequired,
@@ -192,7 +194,7 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch(fetchNearbyOffers(id));
   },
   onBookmarkClick(id, status) {
-    dispatch(ActionCreator.addToBookmarks(id, status));
+    dispatch(addToFavorite(id, status));
   }
 });
 
