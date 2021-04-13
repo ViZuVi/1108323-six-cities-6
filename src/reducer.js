@@ -1,6 +1,6 @@
 import {ActionType} from './action';
 import {AuthorizationStatus, LoadingStatus, SortingValues} from './const';
-import {adaptOffers} from './adapters/offers';
+import {adaptOffer, adaptOffers} from './adapters/offers';
 import {adaptAuthInfo} from './adapters/authInfo';
 
 const sortOffers = (offersToSort, selectedSortType) => {
@@ -29,10 +29,18 @@ const initialState = {
   authorizationStatus: AuthorizationStatus.NO_AUTH,
   favorites: [],
   userInfo: {},
+  nearbyOffers: [],
+  offerStatus: LoadingStatus.PENDING,
+  offer: null
 };
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
+    case ActionType.GET_OFFER:
+      return {
+        ...state,
+        offer: adaptOffer(action.payload)
+      };
     case ActionType.GET_USER_INFO:
       return {
         ...state,
@@ -46,10 +54,15 @@ const reducer = (state = initialState, action) => {
         filteredOffers: offers.slice().filter((offer) => (offer.city.name === state.activeCity)),
         sortedOffers: offers.slice().filter((offer) => (offer.city.name === state.activeCity)),
       };
-    case ActionType.SET_LOADING_STATUS:
+    case ActionType.SET_OFFERS_LOADING_STATUS:
       return {
         ...state,
         offersStatus: action.payload
+      };
+    case ActionType.SET_OFFER_LOADING_STATUS:
+      return {
+        ...state,
+        offerStatus: action.payload
       };
     case ActionType.REQUIRE_AUTHORIZATION:
       return {

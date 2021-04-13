@@ -2,11 +2,19 @@ import {ActionCreator} from "./action";
 import {AuthorizationStatus, LoadingStatus} from "./const";
 
 export const fetchOffers = () => (dispatch, _getState, api) => {
-  dispatch(ActionCreator.setLoadingStatus(LoadingStatus.LOADING));
+  dispatch(ActionCreator.setOffersLoadingStatus(LoadingStatus.LOADING));
   api.get(`/hotels`)
     .then(({data}) => dispatch(ActionCreator.loadOffers(data)))
-    .then(() => dispatch(ActionCreator.setLoadingStatus(LoadingStatus.LOADED)))
-    .catch(() => dispatch(ActionCreator.setLoadingStatus(LoadingStatus.ERROR)));
+    .then(() => dispatch(ActionCreator.setOffersLoadingStatus(LoadingStatus.LOADED)))
+    .catch(() => dispatch(ActionCreator.setOffersLoadingStatus(LoadingStatus.ERROR)));
+};
+
+export const fetchOffer = (id) => (dispatch, _getState, api) => {
+  dispatch(ActionCreator.setOfferLoadingStatus(LoadingStatus.LOADING));
+  api.get(`/hotels/${id}`)
+    .then(({data}) => dispatch(ActionCreator.getOffer(data)))
+    .then(() => dispatch(ActionCreator.setOfferLoadingStatus(LoadingStatus.LOADED)))
+    .catch(() => dispatch(ActionCreator.setOfferLoadingStatus(LoadingStatus.ERROR)));
 };
 
 export const checkAuth = () => (dispatch, _getState, api) => (

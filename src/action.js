@@ -4,8 +4,10 @@ export const ActionType = {
   CHANGE_SORTING: `/changeSorting`,
   REQUIRE_AUTHORIZATION: `/requireAuthorization`,
   LOAD_OFFERS: `/loadOffers`,
-  SET_LOADING_STATUS: `/setLoadingStatus`,
+  SET_OFFERS_LOADING_STATUS: `/setOffersLoadingStatus`,
+  SET_OFFER_LOADING_STATUS: `/setOfferLoadingStatus`,
   GET_USER_INFO: `/getUserInfo`,
+  GET_OFFER: `/getOffer`,
 };
 
 export const ActionCreator = {
@@ -29,12 +31,20 @@ export const ActionCreator = {
     type: ActionType.LOAD_OFFERS,
     payload: offers,
   }),
-  setLoadingStatus: (status) => ({
-    type: ActionType.SET_LOADING_STATUS,
+  setOffersLoadingStatus: (status) => ({
+    type: ActionType.SET_OFFERS_LOADING_STATUS,
+    payload: status,
+  }),
+  setOfferLoadingStatus: (status) => ({
+    type: ActionType.SET_OFFER_LOADING_STATUS,
     payload: status,
   }),
   getUserInfo: (userInfo) => ({
     type: ActionType.GET_USER_INFO,
     payload: userInfo,
+  }),
+  getOffer: (offer) => ({
+    type: ActionType.GET_OFFER,
+    payload: offer,
   })
 };
