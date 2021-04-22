@@ -1,10 +1,8 @@
 import React from 'react';
-import Header from '../Header/Header';
 
 const Spinner = () => {
   return (
     <div className="page page--gray page--main">
-      <Header />
       <main className="page__main page__main--index">
 
         <svg version="1.1" viewBox="-58 -58 116 116" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" style={{width: `30%`, margin: `10% auto`}}>

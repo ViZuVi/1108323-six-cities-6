@@ -6,7 +6,6 @@ export const fetchOffers = () => (dispatch, _getState, api) => {
   api.get(`/hotels`)
     .then(({data}) => dispatch(ActionCreator.loadOffers(data)))
     .then(() => dispatch(ActionCreator.setOffersLoadingStatus(LoadingStatus.LOADED)))
-    .then(() => dispatch(fetchBookmarks()))
     .catch(() => dispatch(ActionCreator.setOffersLoadingStatus(LoadingStatus.ERROR)));
 };
 
