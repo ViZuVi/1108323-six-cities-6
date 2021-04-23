@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import Favorites from '../Favorites/Favorites';
 import FavoritesEmty from '../FavoritesEmpty/FavoritesEmty';
+import {getFavorites} from '../../store/activeOffer/selectors';
 
 const FavoritesContainer = ({favorites}) => {
   return (
@@ -17,7 +18,7 @@ FavoritesContainer.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  favorites: state.favorites
+  favorites: getFavorites(state),
 });
 
 export default connect(mapStateToProps, null)(FavoritesContainer);

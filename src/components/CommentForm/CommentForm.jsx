@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import {postComment} from '../../api-actions';
 import {LoadingStatus} from '../../const';
+import {getCommentStatus, getOffer} from '../../store/activeOffer/selectors';
 
 const CommentForm = ({onSubmit, offer, commentStatus}) => {
   const [stars, setStars] = useState(0);
@@ -90,8 +91,8 @@ CommentForm.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  commentStatus: state.commentStatus,
-  offer: state.offer,
+  commentStatus: getCommentStatus(state),
+  offer: getOffer(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({

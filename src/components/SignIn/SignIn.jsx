@@ -5,6 +5,7 @@ import {connect} from 'react-redux';
 import {login} from '../../api-actions';
 import Header from '../Header/Header';
 import {AppRoute, AuthorizationStatus} from '../../const';
+import {getAuthorizationStatus} from '../../store/user/selectors';
 
 const SignIn = ({onSubmit, authorizationStatus}) => {
   const emailRef = useRef();
@@ -62,7 +63,7 @@ SignIn.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  authorizationStatus: state.authorizationStatus,
+  authorizationStatus: getAuthorizationStatus(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({

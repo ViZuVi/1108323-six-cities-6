@@ -1,8 +1,6 @@
-import {ActionType} from './action';
-import {AuthorizationStatus, LoadingStatus, SortingValues} from './const';
-import {adaptOffer, adaptOffers} from './adapters/offers';
-import {adaptAuthInfo} from './adapters/authInfo';
-import {adaptReviews} from './adapters/reviews';
+import {adaptOffers} from "../../adapters/offers";
+import {LoadingStatus, SortingValues} from "../../const";
+import {ActionType} from "./actions";
 
 const sortOffers = (offersToSort, selectedSortType) => {
   const initOffers = offersToSort.slice();
@@ -27,48 +25,10 @@ const initialState = {
   filteredOffers: [],
   activeSortType: SortingValues.POPULAR,
   sortedOffers: [],
-  authorizationStatus: AuthorizationStatus.NO_AUTH,
-  favorites: [],
-  userInfo: {},
-  nearbyOffers: [],
-  offerStatus: LoadingStatus.PENDING,
-  offer: null,
-  reviews: [],
-  commentStatus: LoadingStatus.PENDING,
 };
 
-const reducer = (state = initialState, action) => {
+const offersData = (state = initialState, action) => {
   switch (action.type) {
-    case ActionType.GET_BOOKMARKS:
-      return {
-        ...state,
-        favorites: adaptOffers(action.payload),
-      };
-    case ActionType.SET_COMMENT_STATUS:
-      return {
-        ...state,
-        commentStatus: action.payload,
-      };
-    case ActionType.GET_NEARBY_OFFERS:
-      return {
-        ...state,
-        nearbyOffers: adaptOffers(action.payload)
-      };
-    case ActionType.GET_REVIEWS:
-      return {
-        ...state,
-        reviews: adaptReviews(action.payload)
-      };
-    case ActionType.GET_OFFER:
-      return {
-        ...state,
-        offer: adaptOffer(action.payload)
-      };
-    case ActionType.GET_USER_INFO:
-      return {
-        ...state,
-        userInfo: adaptAuthInfo(action.payload)
-      };
     case ActionType.LOAD_OFFERS:
       const offers = adaptOffers(action.payload);
       return {
@@ -81,16 +41,6 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         offersStatus: action.payload
-      };
-    case ActionType.SET_OFFER_LOADING_STATUS:
-      return {
-        ...state,
-        offerStatus: action.payload
-      };
-    case ActionType.REQUIRE_AUTHORIZATION:
-      return {
-        ...state,
-        authorizationStatus: action.payload,
       };
     case ActionType.CHANGE_CITY:
       const filteredByCityOffers = state.offers.slice().filter((offer) => (offer.city.name === action.payload));
@@ -116,5 +66,4 @@ const reducer = (state = initialState, action) => {
   return state;
 };
 
-export {reducer};
-
+export {offersData};

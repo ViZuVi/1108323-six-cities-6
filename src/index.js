@@ -7,17 +7,17 @@ import {composeWithDevTools} from 'redux-devtools-extension';
 import {Router} from 'react-router-dom';
 import App from './components/App/App.jsx';
 import browserHistory from './browser-history';
-import {reducer} from './reducer';
+import rootReducer from './store/root-reducer';
 import {createAPI} from './api';
 import {AuthorizationStatus} from './const';
-import {ActionCreator} from './action';
 import {fetchOffers, checkAuth} from './api-actions';
+import {requireAuthorization} from './store/user/actions.js';
 
 const api = createAPI(
-    () => store.dispatch(ActionCreator.requireAuthorization(AuthorizationStatus.NO_AUTH))
+    () => store.dispatch(requireAuthorization(AuthorizationStatus.NO_AUTH))
 );
 
-const store = createStore(reducer, composeWithDevTools(applyMiddleware(thunk.withExtraArgument(api))));
+const store = createStore(rootReducer, composeWithDevTools(applyMiddleware(thunk.withExtraArgument(api))));
 
 store.dispatch(checkAuth());
 store.dispatch(fetchOffers());

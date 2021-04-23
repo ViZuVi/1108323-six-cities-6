@@ -4,6 +4,8 @@ import {connect} from 'react-redux';
 import Review from '../Review/Review';
 import CommentForm from '../CommentForm/CommentForm';
 import {AuthorizationStatus} from '../../const';
+import {getReviews} from '../../store/activeOffer/selectors';
+import {getAuthorizationStatus} from '../../store/user/selectors';
 
 const Reviews = ({reviews, authorizationStatus}) => {
   return (
@@ -23,8 +25,8 @@ Reviews.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  reviews: state.reviews,
-  authorizationStatus: state.authorizationStatus,
+  reviews: getReviews(state),
+  authorizationStatus: getAuthorizationStatus(state),
 });
 
 export default connect(mapStateToProps, null)(Reviews);

@@ -1,8 +1,9 @@
 import React, {useState} from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
-import {ActionCreator} from '../../action';
 import {SortingValues} from '../../const';
+import {changeSorting} from '../../store/offersData/actions';
+import {getActiveSortType} from '../../store/offersData/selectors';
 
 const SortTypes = ({activeSortType, onSortingClick}) => {
   const [isVisible, setIsVisible] = useState(false);
@@ -42,12 +43,12 @@ SortTypes.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  activeSortType: state.activeSortType,
+  activeSortType: getActiveSortType(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({
   onSortingClick(sortType) {
-    dispatch(ActionCreator.changeSorting(sortType));
+    dispatch(changeSorting(sortType));
   }
 });
 

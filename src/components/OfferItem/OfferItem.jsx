@@ -6,6 +6,7 @@ import {Link} from 'react-router-dom';
 import {countStars} from '../../common';
 import {AppRoute, AuthorizationStatus} from '../../const';
 import {addToFavorite} from '../../api-actions';
+import {getAuthorizationStatus} from '../../store/user/selectors';
 
 const OfferItem = ({offer, offerType, onCardMouseover, authorizationStatus, onBookmarkClick}) => {
   const offerClass = {
@@ -106,7 +107,7 @@ OfferItem.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  authorizationStatus: state.authorizationStatus,
+  authorizationStatus: getAuthorizationStatus(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({

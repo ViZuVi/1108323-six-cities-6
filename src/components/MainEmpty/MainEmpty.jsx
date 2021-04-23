@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import Header from '../Header/Header';
 import CitiesList from '../CititesList/CitiesList';
+import {getActiveCity} from '../../store/offersData/selectors';
 
 const MainEmpty = ({activeCity}) => {
   return (
@@ -37,7 +38,7 @@ MainEmpty.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  activeCity: state.activeCity,
+  activeCity: getActiveCity(state),
 });
 
 export default connect(mapStateToProps, null)(MainEmpty);

@@ -9,6 +9,7 @@ import SortTypes from '../SortTypes/SortTypes';
 import {LoadingStatus} from '../../const';
 import Spinner from '../Spinner/Spinner';
 import MainEmpty from '../MainEmpty/MainEmpty';
+import {getActiveCity, getOffers, getOffersStatus} from '../../store/offersData/selectors';
 
 const Main = ({offers, activeCity, offersStatus}) => {
   const [hoveredOffer, setHoveredOffer] = useState(null);
@@ -51,9 +52,9 @@ Main.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  offers: state.sortedOffers,
-  activeCity: state.activeCity,
-  offersStatus: state.offersStatus,
+  offers: getOffers(state),
+  activeCity: getActiveCity(state),
+  offersStatus: getOffersStatus(state),
 });
 
 export default connect(mapStateToProps, null)(Main);

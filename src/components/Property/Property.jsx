@@ -11,6 +11,8 @@ import {AppRoute, AuthorizationStatus, LoadingStatus} from '../../const';
 import NotFound from '../NotFound/NotFound';
 import {addToFavorite, fetchNearbyOffers, fetchOffer, fetchReviews} from '../../api-actions';
 import Spinner from '../Spinner/Spinner';
+import {getNearbyOffers, getOffer, getOfferStatus} from '../../store/activeOffer/selectors';
+import {getAuthorizationStatus} from '../../store/user/selectors';
 
 const Property = ({offer, nearbyOffers, offerStatus, onComponentMount, onBookmarkClick, authorizationStatus}) => {
   const MAX_NEARBY_OFFERS = 3;
@@ -181,10 +183,10 @@ Property.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  offer: state.offer,
-  nearbyOffers: state.nearbyOffers,
-  offerStatus: state.offerStatus,
-  authorizationStatus: state.authorizationStatus,
+  offer: getOffer(state),
+  nearbyOffers: getNearbyOffers(state),
+  offerStatus: getOfferStatus(state),
+  authorizationStatus: getAuthorizationStatus(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({
